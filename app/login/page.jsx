@@ -1,8 +1,15 @@
 "use client";
-
-import Image from "next/image";
+import { useState, useEffect } from "react";
+import { FcGoogle } from "react-icons/fc";
+import { FaMicrosoft } from "react-icons/fa";
 
 export default function SignIn() {
+  const [welcomeText, setWelcomeText] = useState("Welcome to our system!");
+
+  useEffect(() => {
+    setWelcomeText("¡Te damos la bienvenida a nuestro sistema!");
+  }, []);
+
   return (
     <div className="min-h-screen flex items-center bg-gray-100">
       {/* Left Section: Image */}
@@ -24,7 +31,7 @@ export default function SignIn() {
           <h2 className="text-2xl font-bold text-[#FF0032] mb-6">Matrix Consulting</h2>
 
           <p className="text-lg text-[#415564] text-center mb-6">
-            ¡Te damos la bienvenida a nuestro sistema!
+          {welcomeText}
           </p>
 
           <form>
@@ -59,11 +66,11 @@ export default function SignIn() {
 
           <div className="mt-4 text-center">
             <button className="w-full mb-2 py-2 bg-white text-black font-bold rounded-md flex justify-center items-center hover:bg-gray-200 transition-colors border border-black">
-              <img src="/micros.jpg" alt="Microsoft Logo" className="w-6 h-6 mr-2" />
+              <FaMicrosoft className="text-xl mr-2 text-blue-600" />
               Iniciar sesión con Microsoft
             </button>
             <button className="w-full py-2 bg-white text-black font-bold rounded-md flex justify-center items-center hover:bg-gray-200 transition-colors border border-black">
-              <img src="/google.jpg" alt="Google Logo" className="w-6 h-6 mr-2" />
+              <FcGoogle className="text-xl mr-2" />
               Iniciar sesión con Google
             </button>
           </div>
