@@ -4,10 +4,11 @@ import { useAuth } from "react-oidc-context";
 export default function LoginPage() {
   const auth = useAuth();
 
+  const clientId = process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID;
+  const cognitoDomain = process.env.NEXT_PUBLIC_COGNITO_DOMAIN;
+  const logoutUri = process.env.NEXT_PUBLIC_COGNITO_REDIRECT_URI;
+
   const signOutRedirect = () => {
-    const clientId = "7n47e85nrdqahvqhoq9d4ttd9j";
-    const logoutUri = "http://localhost:3000/login";
-    const cognitoDomain = "https://eu-north-1bktrr8b1l.auth.eu-north-1.amazoncognito.com";
     window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(logoutUri)}`;
   };
 
@@ -25,6 +26,7 @@ export default function LoginPage() {
 
   return (
     <div>
+      <h1>Login</h1>
       <button onClick={() => auth.signinRedirect()}>Sign In</button>
       <button onClick={() => signOutRedirect()}>Sign Out</button>
     </div>
