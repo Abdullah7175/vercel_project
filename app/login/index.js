@@ -1,24 +1,32 @@
-// index.js
-import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "../../components/app";
-import { AuthProvider } from "react-oidc-context";
+"use client";
+import { useAuth } from "react-oidc-context";
 
-const cognitoAuthConfig = {
-  authority: "https://cognito-idp.eu-north-1.amazonaws.com/eu-north-1_BktrR8B1L",
-  client_id: "7n47e85nrdqahvqhoq9d4ttd9j",
-  redirect_uri: "https://your-app.vercel.app",
-  response_type: "code",
-  scope: "email openid phone",
-};
+export default function LoginPage() {
+  const auth = useAuth();
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+  const signOutRedirect = () => {
+    const clientId = "7n47e85nrdqahvqhoq9d4ttd9j";
+    const logoutUri = "http://localhost:3000/login";
+    const cognitoDomain = "https://eu-north-1bktrr8b1l.auth.eu-north-1.amazoncognito.com";
+    window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(logoutUri)}`;
+  };
 
-// wrap the application with AuthProvider
-root.render(
-  <React.StrictMode>
-    <AuthProvider {...cognitoAuthConfig}>
-      <App />
-    </AuthProvider>
-  </React.StrictMode>
-);
+  if (auth.isLoading) return <div>Loading...</div>;
+  if (auth.error) return <div>Error: {auth.error.message}</div>;
+
+  if (auth.isAuthenticated) {
+    return (
+      <div>
+        <h1>Welcome, {auth.user?.profile.email}</h1>
+        <button onClick={() => auth.removeUser()}>Sign Out</button>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <button onClick={() => auth.signinRedirect()}>Sign In</button>
+      <button onClick={() => signOutRedirect()}>Sign Out</button>
+    </div>
+  );
+}
