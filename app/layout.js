@@ -10,7 +10,7 @@ const cognitoAuthConfig = {
   client_id: "7n47e85nrdqahvqhoq9d4ttd9j",
   redirect_uri: "https://vercel-project-gilt.vercel.app/dashboard",
   response_type: "code",
-  scope: "email openid profile",
+  scope: "email openid",
 };
 
 export default function RootLayout({ children }) {
