@@ -7,18 +7,16 @@ export default function Navbar() {
   const auth = useAuth();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  // Redirect to login if not authenticated
-//   if (!auth.isAuthenticated) {
-//     if (typeof window !== "undefined") {
-//       window.location.href = "/";
-//     }
-//     return null;
-//   }
-
     const handleSignOut = () => {
         setIsDropdownOpen(false); // Close dropdown on logout
-        auth.signoutRedirect(); // Redirect to Cognito logout
+        
+        const clientId = "7n47e85nrdqahvqhoq9d4ttd9j";
+        const logoutUri = encodeURIComponent("https://vercel-project-em6n.vercel.app");
+        const cognitoDomain = "https://eu-north-1bktrr8b1l.auth.eu-north-1.amazoncognito.com";
+
+        window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${logoutUri}`;
     };
+
   
 
 return (
