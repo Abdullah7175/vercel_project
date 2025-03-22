@@ -10,7 +10,7 @@ const cognitoAuthConfig = {
   client_id: "7n47e85nrdqahvqhoq9d4ttd9j",
   redirect_uri: "https://vercel-project-em6n.vercel.app/auth/callback",
   response_type: "code",
-  scope: "email openid profile",
+  scope: "openid email profile",
 };
 
 export default function LoginPage() {
