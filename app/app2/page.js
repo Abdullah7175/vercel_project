@@ -16,7 +16,7 @@ function App() {
 
   const signOutRedirect = () => {
     const clientId = "7n47e85nrdqahvqhoq9d4ttd9j";
-    const logoutUri = encodeURIComponent("https://vercel-project-new-lyart.vercel.app");
+    const logoutUri = encodeURIComponent("https://vercel-project-em6n.vercel.app");
     const cognitoDomain = "https://eu-north-1bktrr8b1l.auth.eu-north-1.amazoncognito.com";
     
     window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${logoutUri}`;
