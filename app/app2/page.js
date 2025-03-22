@@ -15,13 +15,14 @@ function App() {
   };
 
   const signOutRedirect = () => {
-    const clientId = "7n47e85nrdqahvqhoq9d4ttd9j";
-    const logoutUri = encodeURIComponent("https://vercel-project-em6n.vercel.app");
-    const cognitoDomain = "https://eu-north-1bktrr8b1l.auth.eu-north-1.amazoncognito.com"; // Ensure this matches the Cognito User Pool domain
+    auth.signoutRedirect(); // Properly logs out the user
+    localStorage.clear(); // Clear stored session data
+    sessionStorage.clear();
   
-    window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${logoutUri}`;
+    setTimeout(() => {
+      window.location.href = "https://vercel-project-em6n.vercel.app"; // Redirect after logout
+    }, 1000);
   };
-  
   
 
   if (auth.isLoading) {

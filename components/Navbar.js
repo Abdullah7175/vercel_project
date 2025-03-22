@@ -7,15 +7,26 @@ export default function Navbar() {
   const auth = useAuth();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-    const handleSignOut = () => {
-        setIsDropdownOpen(false); // Close dropdown on logout
+    // const handleSignOut = () => {
+    //     setIsDropdownOpen(false); // Close dropdown on logout
         
-        const clientId = "7n47e85nrdqahvqhoq9d4ttd9j";
-        const logoutUri = encodeURIComponent("https://vercel-project-em6n.vercel.app");
-        const cognitoDomain = "https://eu-north-1bktrr8b1l.auth.eu-north-1.amazoncognito.com";
+    //     const clientId = "7n47e85nrdqahvqhoq9d4ttd9j";
+    //     const logoutUri = encodeURIComponent("https://vercel-project-em6n.vercel.app");
+    //     const cognitoDomain = "https://eu-north-1bktrr8b1l.auth.eu-north-1.amazoncognito.com";
 
-        window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${logoutUri}`;
-    };
+    //     window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${logoutUri}`;
+    // };
+
+    const signOutRedirect = () => {
+        setIsDropdownOpen(false);
+        auth.signoutRedirect(); // Properly logs out the user
+        localStorage.clear(); // Clear stored session data
+        sessionStorage.clear();
+      
+        setTimeout(() => {
+          window.location.href = "https://vercel-project-em6n.vercel.app"; // Redirect after logout
+        }, 1000);
+      };
 
   
 
@@ -54,7 +65,7 @@ return (
           {isDropdownOpen && (
             <div className="absolute top-10 right-0 bg-white shadow-lg rounded-md p-2 w-32">
               <button
-                onClick={handleSignOut}
+                onClick={signOutRedirect}
                 className="block w-full text-right px-4 py-2 text-sm text-red-500 hover:bg-gray-100"
               >
                 Logout
