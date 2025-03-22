@@ -4,9 +4,19 @@ import { useState, useEffect } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { FaMicrosoft } from "react-icons/fa";
 import { useAuth } from "react-oidc-context";
+import { useRouter } from "next/navigation";
 
 function App() {
   const auth = useAuth();
+  const router = useRouter();
+
+  const handleLogin = () => {
+    auth.signinRedirect();  // This redirects to AWS Cognito
+  };
+
+  const handleLogout = () => {
+    auth.signoutRedirect();
+  };
 
   const signOutRedirect = () => {
     const clientId = "7n47e85nrdqahvqhoq9d4ttd9j";
@@ -23,17 +33,23 @@ function App() {
     return <div>Encountering error... {auth.error.message}</div>;
   }
 
-  if (auth.isAuthenticated) {
-    return (
-      <div>
-        <pre> Hello: {auth.user?.profile.email} </pre>
-        <pre> ID Token: {auth.user?.id_token} </pre>
-        <pre> Access Token: {auth.user?.access_token} </pre>
-        <pre> Refresh Token: {auth.user?.refresh_token} </pre>
+  // if (auth.isAuthenticated) {
+  //   return (
+  //     <div>
+  //       <pre> Hello: {auth.user?.profile.email} </pre>
+  //       <pre> ID Token: {auth.user?.id_token} </pre>
+  //       <pre> Access Token: {auth.user?.access_token} </pre>
+  //       <pre> Refresh Token: {auth.user?.refresh_token} </pre>
 
-        <button onClick={() => auth.removeUser()}>Sign out</button>
-      </div>
-    );
+  //       <button onClick={() => auth.removeUser()}>Sign out</button>
+  //     </div>
+  //   );
+  // }
+
+  if (auth.isAuthenticated) {
+    // After successful login, redirect user to dashboard
+    router.push("/dashboard");
+    return null; // Prevents rendering unnecessary UI before redirect
   }
 
   const [welcomeText, setWelcomeText] = useState("Welcome to our system!");
@@ -90,9 +106,12 @@ function App() {
                 placeholder="Contraseña"
               />
             </div>
-            <button onClick={() => auth.signinRedirect()} className="w-full py-2 bg-[#9B2341] text-white font-bold rounded-md hover:bg-[#7A1C33] transition-colors border border-black">
+            <button onClick={handleLogin}  className="w-full py-2 bg-[#9B2341] text-white font-bold rounded-md hover:bg-[#7A1C33] transition-colors border border-black">
+            Iniciar sesión
+              </button>
+            {/* <button onClick={() => auth.signinRedirect()} className="w-full py-2 bg-[#9B2341] text-white font-bold rounded-md hover:bg-[#7A1C33] transition-colors border border-black">
                 Iniciar sesión
-                </button>
+                </button> */}
             {/* <button className="w-full py-2 bg-[#9B2341] text-white font-bold rounded-md hover:bg-[#7A1C33] transition-colors border border-black">
               Iniciar sesión
             </button> */}
