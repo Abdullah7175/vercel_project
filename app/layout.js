@@ -1,8 +1,9 @@
 "use client";
 import { AuthProvider, useAuth } from "react-oidc-context";
-import { Geist, Geist_Mono } from "next/font/google";
+import Sidebar from "@/components/Sidebar";
+import Navbar from "@/components/Navbar";
+import { usePathname } from "next/navigation";
 import "./globals.css";
-import Navbar from "@/components/Navbar"; // Import the Navbar component
 
 const cognitoAuthConfig = {
   authority: "https://cognito-idp.eu-north-1.amazonaws.com/eu-north-1_BktrR8B1L",
@@ -13,25 +14,20 @@ const cognitoAuthConfig = {
 };
 
 export default function RootLayout({ children }) {
+  const pathname = usePathname();
+  const isLoginPage = pathname === "/"; // Check if the user is on the root route (login page)
+
   return (
     <AuthProvider {...cognitoAuthConfig}>
       <html lang="en">
-        <body>
-          <AuthWrapper>{children}</AuthWrapper>
+        <body className="flex h-screen bg-gray-100">
+          {!isLoginPage && <Sidebar />} {/* Sidebar only if not on login page */}
+          <div className="flex flex-col flex-1 min-h-screen">
+            {!isLoginPage && <Navbar />} {/* Navbar only if not on login page */}
+            <main className="flex-1 overflow-auto p-4">{children}</main>
+          </div>
         </body>
       </html>
     </AuthProvider>
-  );
-}
-
-// Wrapper to conditionally show Navbar after login
-function AuthWrapper({ children }) {
-  const auth = useAuth();
-
-  return (
-    <>
-      {auth.user && <Navbar />} {/* Show Navbar only if user is authenticated */}
-      {children}
-    </>
   );
 }
