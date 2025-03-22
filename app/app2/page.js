@@ -14,16 +14,14 @@ function App() {
     auth.signinRedirect();  // This redirects to AWS Cognito
   };
 
-  const handleLogout = () => {
-    auth.signoutRedirect();
-  };
-
   const signOutRedirect = () => {
     const clientId = "7n47e85nrdqahvqhoq9d4ttd9j";
-    const logoutUri = "https://vercel-project-new-lyart.vercel.app/login";
+    const logoutUri = encodeURIComponent("https://vercel-project-new-lyart.vercel.app/login");
     const cognitoDomain = "https://eu-north-1bktrr8b1l.auth.eu-north-1.amazoncognito.com";
-    window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(logoutUri)}`;
+    
+    window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${logoutUri}`;
   };
+  
 
   if (auth.isLoading) {
     return <div>Loading...</div>;
@@ -85,17 +83,19 @@ function App() {
           <form>
             <div className="mb-4">
               <label htmlFor="email" className="block text-sm font-medium text-gray-600">
-                Email / Usuario
               </label>
-              <input
+              <button onClick={handleLogin}  className="w-full py-2 bg-[#9B2341] text-white font-bold rounded-md hover:bg-[#7A1C33] transition-colors border border-black">
+            Iniciar sesión
+              </button>
+              {/* <input
                 id="email"
                 type="email"
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Email"
-              />
+              /> */}
             </div>
 
-            <div className="mb-6">
+            {/* <div className="mb-6">
               <label htmlFor="password" className="block text-sm font-medium text-gray-600">
                 Contraseña
               </label>
@@ -108,7 +108,7 @@ function App() {
             </div>
             <button onClick={handleLogin}  className="w-full py-2 bg-[#9B2341] text-white font-bold rounded-md hover:bg-[#7A1C33] transition-colors border border-black">
             Iniciar sesión
-              </button>
+              </button> */}
             {/* <button onClick={() => auth.signinRedirect()} className="w-full py-2 bg-[#9B2341] text-white font-bold rounded-md hover:bg-[#7A1C33] transition-colors border border-black">
                 Iniciar sesión
                 </button> */}
