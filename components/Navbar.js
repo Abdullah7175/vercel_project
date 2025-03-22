@@ -8,12 +8,12 @@ export default function Navbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   // Redirect to login if not authenticated
-//   if (!auth.isAuthenticated) {
-//     if (typeof window !== "undefined") {
-//       window.location.href = "/";
-//     }
-//     return null;
-//   }
+  if (!auth.isAuthenticated) {
+    if (typeof window !== "undefined") {
+      window.location.href = "/";
+    }
+    return null;
+  }
 
 return (
     <nav className="bg-white shadow-md flex justify-between items-center px-6 py-3">
