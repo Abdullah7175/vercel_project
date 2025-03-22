@@ -111,7 +111,7 @@ const Dashboard = () => {
                 <img 
                   src="/bottle.png" 
                   alt="Wine bottle" 
-                  className="w-full h-40 object-cover mb-4"
+                  className="w-50 h-full "
                 />
                 <h3 className="text-sm font-medium">Dolores Reserva Especial 70D082</h3>
               </div>
