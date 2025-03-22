@@ -10,6 +10,8 @@ const Callback = () => {
   useEffect(() => {
     if (auth.isAuthenticated) {
       router.push("/dashboard");
+    } else {
+      router.push("/"); // Redirect to login if not authenticated
     }
   }, [auth.isAuthenticated, router]);
 
