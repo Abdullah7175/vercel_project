@@ -8,9 +8,9 @@ import "./globals.css";
 const cognitoAuthConfig = {
   authority: "https://cognito-idp.eu-north-1.amazonaws.com/eu-north-1_BktrR8B1L",
   client_id: "7n47e85nrdqahvqhoq9d4ttd9j",
-  redirect_uri: "https://vercel-project-gilt.vercel.app/login",
+  redirect_uri: "https://vercel-project-gilt.vercel.app/dashboard",
   response_type: "code",
-  scope: "email openid",
+  scope: "email openid profile",
 };
 
 export default function RootLayout({ children }) {
