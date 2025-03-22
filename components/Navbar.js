@@ -14,7 +14,7 @@ export default function Navbar() {
         const logoutUri = encodeURIComponent("https://vercel-project-em6n.vercel.app");
         const cognitoDomain = "https://eu-north-1bktrr8b1l.auth.eu-north-1.amazoncognito.com";
 
-        window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${logoutUri}`;
+        window.location.href = `${logoutUri}`;
     };
 
   
