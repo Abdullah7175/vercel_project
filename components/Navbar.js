@@ -15,6 +15,12 @@ export default function Navbar() {
 //     return null;
 //   }
 
+    const handleSignOut = () => {
+        setIsDropdownOpen(false); // Close dropdown on logout
+        auth.signoutRedirect(); // Redirect to Cognito logout
+    };
+  
+
 return (
     <nav className="bg-white shadow-md flex justify-between items-center px-6 py-3">
       {/* Left Side - Branding */}
@@ -50,7 +56,7 @@ return (
           {isDropdownOpen && (
             <div className="absolute top-10 right-0 bg-white shadow-lg rounded-md p-2 w-32">
               <button
-                onClick={() => auth.signoutRedirect()}
+                onClick={handleSignOut}
                 className="block w-full text-right px-4 py-2 text-sm text-red-500 hover:bg-gray-100"
               >
                 Logout
