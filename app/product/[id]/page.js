@@ -268,10 +268,10 @@ export default function ProductDetail({ params }) {
 {/* Modal Popup */}
 {selectedProduct && (
   <div className="fixed inset-0 flex items-center justify-center bg-opacity-30 backdrop-blur-xs z-50 p-4">
-    <div className="bg-white p-6 rounded-lg w-full max-w-3xl max-h-[90vh] shadow-lg relative overflow-hidden">
-      
-      {/* Close Button */}
-      <button
+  <div className="bg-white p-6 rounded-lg w-full max-w-3xl max-h-[90vh] shadow-lg relative overflow-hidden">
+         
+       {/* Close Button */}
+       <button
         onClick={handleCloseModal}
         className="absolute top-4 right-4 text-gray-600 hover:text-gray-900 text-xl"
       >
@@ -279,61 +279,116 @@ export default function ProductDetail({ params }) {
       </button>
 
       {/* Title */}
-      <h2 className="text-left font-bold mb-4 ">{selectedProduct.name}</h2>
-      <h1 className="text-2xl font-bold mb-4 ">Rango relaciones H-V</h1>
+      <h2 className="text-left font-bold mb-2">{selectedProduct.name}</h2>
+      <h1 className="text-2xl font-bold mb-4">Rango relaciones H-V</h1>
 
       {/* Relationship Graph */}
-      <div className="flex flex-col items-center space-y-2">
-        {/* Top Product */}
+      <div className="flex flex-col items-center space-y-4">
+        
+        {/* Top Product (Vertical Relation) */}
         <div className="flex flex-col items-center">
-          <div className="bg-gray-100 p-3 rounded-lg shadow w-40 text-center">
-            <img src={selectedProduct.relatedProducts[0].image} alt={selectedProduct.relatedProducts[0].name} className="w-12 mx-auto mb-1" />
-            <p className="text-xs font-semibold">{selectedProduct.relatedProducts[0].name}</p>
-            <p className="text-xs">Actual: {selectedProduct.relatedProducts[0].priceActual}</p>
-            <p className="text-xs">Recomendado: {selectedProduct.relatedProducts[0].priceRecommended}</p>
-          </div>
-          <div className="h-4 border-l-2 border-gray-300"></div>
-        </div>
-
-        {/* Center Layout */}
-        <div className="grid grid-cols-3 gap-10 items-center">
-          {/* Left Product */}
-          <div className="flex flex-col items-center relative">
-          <div className="bg-gray-100 p-3 rounded-lg shadow w-40 text-center relative after:content-[''] after:absolute after:top-1/2 after:right-[-15px] after:w-0 after:h-0 after:border-t-4 after:border-b-4 after:border-l-8 after:border-l-gray-300 after:border-transparent">
-            <img src={selectedProduct.relatedProducts[1].image} alt={selectedProduct.relatedProducts[1].name} className="w-12 mx-auto mb-1" />
-            <p className="text-xs font-semibold">{selectedProduct.relatedProducts[1].name}</p>
-            <p className="text-xs">Actual: {selectedProduct.relatedProducts[1].priceActual}</p>
-            <p className="text-xs">Recomendado: {selectedProduct.relatedProducts[1].priceRecommended}</p>
-          </div>
-        </div>
-
-          {/* Center Product (Main) */}
-          <div className="bg-white border-2 border-red-500 p-3 rounded-lg shadow w-40 text-center">
-            <img src={selectedProduct.image} alt={selectedProduct.name} className="w-12 mx-auto mb-1" />
-            <p className="text-xs font-semibold">{selectedProduct.name}</p>
-            <p className="text-xs">Actual: {selectedProduct.priceActual}</p>
-            <p className="text-xs">Recomendado: {selectedProduct.priceRecommended}</p>
-          </div>
-
-          {/* Right Product */}
-          <div className="flex flex-col items-center relative">
-            <div className="bg-gray-100 p-3 rounded-lg shadow w-40 text-center relative after:content-[''] after:absolute after:top-1/2 after:left-[-15px] after:w-0 after:h-0 after:border-t-4 after:border-b-4 after:border-r-8 after:border-r-gray-300 after:border-transparent">
-              <img src={selectedProduct.relatedProducts[2].image} alt={selectedProduct.relatedProducts[2].name} className="w-12 mx-auto mb-1" />
-              <p className="text-xs font-semibold">{selectedProduct.relatedProducts[2].name}</p>
-              <p className="text-xs">Actual: {selectedProduct.relatedProducts[2].priceActual}</p>
-              <p className="text-xs">Recomendado: {selectedProduct.relatedProducts[2].priceRecommended}</p>
+          <div className="bg-gray-100 p-3 rounded-lg shadow w-52 text-center">
+          <div className="bg-white rounded-2xl shadow-2xl">
+            <img
+              src={selectedProduct.relatedProducts[0].image}
+              alt={selectedProduct.relatedProducts[0].name}
+              className="w-12 mx-auto mb-2"
+            />
             </div>
+            <div>
+            <p className="text-sm font-semibold">{selectedProduct.relatedProducts[0].name}</p>
+            <p className="text-xs">Precio Actual: ${selectedProduct.relatedProducts[0].priceActual}</p>
+            <p className="text-xs">Precio Recomendado: ${selectedProduct.relatedProducts[0].priceRecommended}</p>
+            </div>
+            <button className="mt-2 px-4 py-1 text-sm rounded-2xl shadow hover:bg-gray-100">
+              Ver Info
+            </button>
+          </div>
+          {/* Vertical Arrow */}
+          <div className="h-6 border-l-2 border-gray-400 mt-2"></div>
+          <p className="text-xs text-gray-500">V Brecha 25%</p>
+        </div>
+
+        {/* Middle Section (Left, Center, Right) */}
+        <div className="grid grid-cols-3 items-center gap-6">
+          
+          {/* Left Product (Horizontal Relation) */}
+          <div className="flex flex-col items-center relative">
+            <div className="bg-gray-100 p-3 rounded-lg shadow w-52 text-center">
+            <div className="bg-white rounded-2xl shadow-2xl">
+              <img
+                src={selectedProduct.relatedProducts[1].image}
+                alt={selectedProduct.relatedProducts[1].name}
+                className="w-12 mx-auto mb-2"
+              />
+              </div>
+              <div>
+              <p className="text-sm font-semibold">{selectedProduct.relatedProducts[1].name}</p>
+              <p className="text-xs">Precio Actual: ${selectedProduct.relatedProducts[1].priceActual}</p>
+              <p className="text-xs">Precio Recomendado: ${selectedProduct.relatedProducts[1].priceRecommended}</p>
+              </div>
+              <button className="mt-2 px-4 py-1 text-sm rounded-2xl shadow hover:bg-gray-100">
+                Ver Info
+              </button>
+            </div>
+            {/* Horizontal Arrow */}
+            <div className="absolute top-1/2 -right-6 w-6 border-t-2 border-gray-400"></div>
+            <p className="absolute top-1/2 right-0 text-xs text-gray-500">H Brecha 25%</p>
+          </div>
+
+          {/* Center Product (Main Product) */}
+          <div className="bg-white border-2 border-red-500 p-4 rounded-lg shadow w-52 text-center">
+            <img src={selectedProduct.image} alt={selectedProduct.name} className="w-12 mx-auto mb-2" />
+            <p className="text-sm font-semibold">{selectedProduct.name}</p>
+            <p className="text-xs">Precio Actual: ${selectedProduct.priceActual}</p>
+            <p className="text-xs">Precio Recomendado: ${selectedProduct.priceRecommended}</p>
+          </div>
+
+          {/* Right Product (Horizontal Relation) */}
+          <div className="flex flex-col items-center relative">
+            <div className="bg-gray-100 p-3 rounded-lg shadow w-52 text-center">
+            <div className="bg-white rounded-2xl shadow-2xl">
+              <img
+                src={selectedProduct.relatedProducts[2].image}
+                alt={selectedProduct.relatedProducts[2].name}
+                className="w-12 mx-auto mb-2"
+              />
+              </div>
+              <div>
+              <p className="text-sm font-semibold">{selectedProduct.relatedProducts[2].name}</p>
+              <p className="text-xs">Precio Actual: ${selectedProduct.relatedProducts[2].priceActual}</p>
+              <p className="text-xs">Precio Recomendado: ${selectedProduct.relatedProducts[2].priceRecommended}</p>
+              </div>
+              <button className="mt-2 px-4 py-1 text-sm rounded-2xl shadow hover:bg-gray-100">
+                Ver Info
+              </button>
+            </div>
+            {/* Horizontal Arrow */}
+            <div className="absolute top-1/2 -left-6 w-6 border-t-2 border-gray-400"></div>
+            <p className="absolute top-1/2 left-0 text-xs text-gray-500">H Brecha 25%</p>
           </div>
         </div>
 
-        {/* Bottom Product */}
+        {/* Bottom Product (Vertical Relation) */}
         <div className="flex flex-col items-center">
-          <div className="h-4 border-l-2 border-gray-300"></div>
-          <div className="bg-gray-100 p-3 rounded-lg shadow w-40 text-center">
-            <img src={selectedProduct.relatedProducts[3].image} alt={selectedProduct.relatedProducts[3].name} className="w-12 mx-auto mb-1" />
-            <p className="text-xs font-semibold">{selectedProduct.relatedProducts[3].name}</p>
-            <p className="text-xs">Actual: {selectedProduct.relatedProducts[3].priceActual}</p>
-            <p className="text-xs">Recomendado: {selectedProduct.relatedProducts[3].priceRecommended}</p>
+          <div className="h-6 border-l-2 border-gray-400"></div>
+          <p className="text-xs text-gray-500">V Brecha 25%</p>
+          <div className="bg-gray-100 p-3 rounded-lg shadow w-52 text-center">
+          <div className="bg-white rounded-2xl shadow-2xl">
+            <img
+              src={selectedProduct.relatedProducts[3].image}
+              alt={selectedProduct.relatedProducts[3].name}
+              className="w-10 mx-auto mb-2"
+            />
+            </div>
+            <div>
+            <p className="text-sm font-semibold">{selectedProduct.relatedProducts[3].name}</p>
+            <p className="text-xs">Precio Actual: ${selectedProduct.relatedProducts[3].priceActual}</p>
+            <p className="text-xs">Precio Recomendado: ${selectedProduct.relatedProducts[3].priceRecommended}</p>
+            </div>
+            <button className="mt-2 px-4 py-1 text-sm rounded-2xl shadow hover:bg-gray-100">
+              Ver Info
+            </button>
           </div>
         </div>
       </div>
