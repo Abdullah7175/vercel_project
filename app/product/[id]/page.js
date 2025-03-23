@@ -7,11 +7,11 @@ export default function ProductDetail({ params }) {
   const [selectedProduct, setSelectedProduct] = useState(null);
 
 
-  const getRangeWidth = (min, max, value) => {
-    if (value < min) return "0%";
-    if (value > max) return "100%";
-    return `${((value - min) / (max - min)) * 100}%`;
-  };
+  // const getRangeWidth = (min, max, value) => {
+  //   if (value < min) return "0%";
+  //   if (value > max) return "100%";
+  //   return `${((value - min) / (max - min)) * 100}%`;
+  // };
 
   const handleOpenModal = (product) => {
     console.log("Opening modal for:", product); // Debugging log
@@ -20,6 +20,16 @@ export default function ProductDetail({ params }) {
 
   const handleCloseModal = () => {
     setSelectedProduct(null);
+  };
+
+  const getLeftPosition = (min, max, value) => {
+    if (value === null || value === undefined) return 0;
+    return ((value - min) / (max - min)) * 100;
+  };
+  
+  const getRangeWidth = (min, max, range) => {
+    if (!range || !Array.isArray(range)) return 0;
+    return ((range[1] - range[0]) / (max - min)) * 100;
   };
 
   const selectedProductDetails = {
@@ -204,67 +214,98 @@ export default function ProductDetail({ params }) {
         </div>
       </div>
 
-      {/* Pricing Recommendation Logic */}
-      <div className="bg-white p-6 rounded-2xl shadow-2xl">
-        <h2 className="text-lg font-semibold mb-4">Lógica de recomendación</h2>
+{/* Pricing Recommendation Logic */}
+<div className="bg-white p-6 rounded-2xl shadow-2xl w-full">
+  <h2 className="text-lg font-semibold mb-4 flex items-center">
+    Lógica de recomendación
+    <span className="ml-2 text-gray-400 cursor-pointer text-sm">❓</span>
+  </h2>
 
-        <div className="overflow-x-auto">
-        <table className="w-full text-sm">
-            <thead>
-              <tr className="text-gray-600">
-                <th className="text-left p-2">Regla</th>
-                <th className="text-left p-2">Precios y rangos</th>
-                <th className="text-right p-2">Regla</th>
-                <th className="text-center p-2">Info</th>
-              </tr>
-            </thead>
-            <tbody>
-              {[
-                { label: "Precio actual", range: 7000, min: 0, max: 10000, value: 7000, highlight: true },
-                { label: "Márgen mínimo", range: [7000, Infinity], min: 7000, max: 10000, value: 7500 },
-                { label: "Rango Competitivo", range: [6000, 8000], min: 6000, max: 8000, value: 6800 },
-                { label: "Rango relaciones H-V", range: [6000, 8000], min: 6000, max: 8000, value: 7100 },
-                { label: "Rango solución", range: null, min: 6000, max: 8000, value: null, highlight: true },
-                { label: "Precio recomendado", range: 6000, min: 0, max: 10000, value: 6000, highlight: true }
-              ].map((row, i) => (
-                <tr key={i} className={`border-b ${row.highlight ? "bg-red-100 font-semibold" : ""}`}>
-                  <td className="p-2">{row.label}</td>
-                  <td className="p-2">
-                    <div className="relative w-full h-6 bg-gray-100 rounded-lg flex items-center">
-                      <div 
-                        className="absolute bg-red-500 h-4 rounded"
-                        style={{
-                          left: `${getRangeWidth(row.min, row.max, row.value)}`,
-                          width: row.range ? `${getRangeWidth(row.min, row.max, row.value)}` : "0%"
-                        }}
-                      ></div>
-                    </div>
-                  </td>
-                  <td className="p-2 text-right">
-                    {Array.isArray(row.range) ? `$${row.range[0]} - $${row.range[1]}` : row.range ? `$${row.range}` : "Sin rango factible"}
-                  </td>
-                  <td className="p-2 text-center">
-                  <button 
-                        onClick={() => handleOpenModal(selectedProductDetails)}
-                        className="text-blue-500 hover:text-blue-700"
-                    >
-                      ❓
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        {/* Gridline Labels */}
-        <div className="relative w-2/6 mx-auto mt-2">
-  <div className="flex justify-between text-gray-500 text-xs">
-    {[0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000].map((val) => (
-      <span key={val}>${val.toLocaleString()}</span>
-    ))}
+  <div className="overflow-x-auto">
+    <table className="w-full text-sm border-collapse">
+      <thead>
+        <tr className="text-gray-600 bg-gray-100">
+          <th className="text-left p-2 w-1/4">Regla</th>
+          <th className="text-left p-2 w-2/4">Precios y rangos</th>
+          <th className="text-right p-2 w-1/6">Regla</th>
+          <th className="text-center p-2 w-1/12">Info</th>
+        </tr>
+      </thead>
+      <tbody>
+        {[
+          { label: "Precio actual", range: [7000, 9000], min: 0, max: 10000, value: 7000, highlight: true },
+          { label: "Márgen mínimo", range: [7000, 10000], min: 7000, max: 10000, value: 7500 },
+          { label: "Rango Competitivo", range: [6000, 8000], min: 6000, max: 8000, value: 6800 },
+          { label: "Rango relaciones H-V", range: [6000, 8000], min: 6000, max: 8000, value: 7100 },
+          { label: "Rango solución", range: null, min: 6000, max: 8000, value: null, highlight: true },
+          { label: "Precio recomendado", range: [6000, 7000], min: 0, max: 10000, value: 6000, highlight: true }
+        ].map((row, i) => (
+          <tr key={i} className={`border-b ${row.highlight ? "bg-red-100 font-semibold" : ""}`}>
+            {/* Rule Label */}
+            <td className="p-2">{row.label}</td>
+
+            {/* Price and Range Bar with Embedded Grid Lines */}
+            <td className="p-2 relative">
+              <div className="relative w-full h-6 bg-gray-100 rounded-lg flex items-center overflow-hidden">
+                {/* Grid Lines - Background Ticks */}
+                {[0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000].map((val) => (
+                  <div
+                    key={val}
+                    className="absolute top-0 bottom-0 w-0.5 bg-gray-300"
+                    style={{ left: `${getLeftPosition(row.min, row.max, val)}%` }}
+                  ></div>
+                ))}
+
+                {/* Background range */}
+                {Array.isArray(row.range) && (
+                  <div
+                    className="absolute h-4 bg-red-300 rounded"
+                    style={{
+                      left: `${getLeftPosition(row.min, row.max, row.range[0])}%`,
+                      width: `${getRangeWidth(row.min, row.max, row.range[0], row.range[1])}%`,
+                    }}
+                  ></div>
+                )}
+
+                {/* Value indicator */}
+                {row.value !== null && (
+                  <div
+                    className="absolute h-4 bg-red-500 rounded transition-all"
+                    style={{
+                      left: `${getLeftPosition(row.min, row.max, row.value)}%`,
+                      width: "4%",
+                    }}
+                  ></div>
+                )}
+              </div>
+            </td>
+
+            {/* Price Rule Display */}
+            <td className="p-2 text-right">
+              {Array.isArray(row.range) 
+                ? `$${row.range[0].toLocaleString()} - $${row.range[1] ? row.range[1].toLocaleString() : "∞"}`
+                : row.range 
+                ? `$${row.range}` 
+                : "Sin rango factible"}
+            </td>
+
+            {/* Info Button */}
+            <td className="p-2 text-center">
+              <button 
+                onClick={() => handleOpenModal(selectedProduct)}
+                className="text-blue-500 hover:text-blue-700 transition"
+              >
+                ❓
+              </button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   </div>
 </div>
-      </div>
+
+
 {/* Modal Popup */}
 {selectedProduct && (
   <div className="fixed inset-0 flex items-center justify-center backdrop-blur-xs z-50 p-4">
